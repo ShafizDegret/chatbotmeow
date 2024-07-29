@@ -1,8 +1,6 @@
 import openai
 import streamlit as st
 
-!pip install --upgrade openai
-
 # Sidebar for API key input
 with st.sidebar:
     st.title('🤖💬 OpenAI Chatbot')
