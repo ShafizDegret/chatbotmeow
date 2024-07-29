@@ -1,6 +1,8 @@
 import openai
 import streamlit as st
 
+pip install --upgrade openai
+
 # Sidebar for API key input
 with st.sidebar:
     st.title('🤖💬 OpenAI Chatbot')
@@ -32,12 +34,12 @@ if prompt := st.chat_input("What is up?"):
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
         full_response = ""
-        for response in openai.ChatCompletion.create(
+        response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[{"role": m["role"], "content": m["content"]}
-                      for m in st.session_state.messages], stream=True):
-            full_response += response.choices[0].delta.get("content", "")
-            message_placeholder.markdown(full_response + "▌")
+                      for m in st.session_state.messages]
+        )
+        full_response = response.choices[0].message["content"]
         message_placeholder.markdown(full_response)
     
     st.session_state.messages.append({"role": "assistant", "content": full_response})
